@@ -3,8 +3,7 @@ import { initializeApp, FirebaseApp } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
 
 // Configure environment variables
-import dotenv from "dotenv";
-dotenv.config();
+import "dotenv/config";
 
 // Your web app's Firebase configuration
 const firebaseConfig: FirebaseConfig = {
