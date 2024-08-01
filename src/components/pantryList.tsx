@@ -1,10 +1,5 @@
 import { Box, Stack, Typography, Button } from "@mui/material";
 
-interface Item {
-  name: string;
-  quantity: number;
-}
-
 export default function PantryList({ pantry, addItem, removeItem }: any) {
   return (
     <Stack width="800px" height="300px" spacing={2} overflow="auto">
