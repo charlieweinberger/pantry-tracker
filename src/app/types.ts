@@ -5,9 +5,9 @@ interface Item {
 
 interface FirebaseConfig {
   apiKey: string | undefined;
-  authDomain: string;
-  projectId: string;
-  storageBucket: string;
+  authDomain: string | undefined;
+  projectId: string | undefined;
+  storageBucket: string | undefined;
   messagingSenderId: string | undefined;
   appId: string | undefined;
 }
