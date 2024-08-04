@@ -1,6 +1,12 @@
 import { Box, Stack, Typography, Button } from "@mui/material";
 
-export default function PantryList({ pantry, addItem, removeItem }: any) {
+interface Props {
+  pantry: Item[];
+  addItem: (parameterName: string) => Promise<void>;
+  removeItem: (parameterName: string) => Promise<void>;
+}
+
+export default function PantryList({ pantry, addItem, removeItem }: Props): JSX.Element {
   return (
     <Stack width="800px" height="300px" spacing={2} overflow="auto">
       {

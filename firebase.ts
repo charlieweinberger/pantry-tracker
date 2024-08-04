@@ -5,6 +5,16 @@ import { getFirestore, Firestore } from "firebase/firestore";
 // Configure environment variables
 import "dotenv/config";
 
+// TS types
+interface FirebaseConfig {
+  apiKey: string | undefined;
+  authDomain: string | undefined;
+  projectId: string | undefined;
+  storageBucket: string | undefined;
+  messagingSenderId: string | undefined;
+  appId: string | undefined;
+}
+
 // Your web app's Firebase configuration
 const firebaseConfig: FirebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,

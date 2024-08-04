@@ -2,24 +2,24 @@
 
 // Imports
 
-import { useState, useEffect } from "react";
-import { Box, Stack, Typography, Button } from "@mui/material"
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { Box, Typography, Button } from "@mui/material"
 
 import { firestore } from "@/firebase";
-import { collection, query, doc, getDoc, setDoc, deleteDoc, getDocs } from "firebase/firestore"; // functions
-import { DocumentSnapshot, DocumentReference, QueryDocumentSnapshot, Query, QuerySnapshot } from "firebase/firestore"; // types
+import { collection, query, doc, getDoc, setDoc, deleteDoc, getDocs } from "firebase/firestore";
+import type { DocumentSnapshot, DocumentReference, QueryDocumentSnapshot, Query, QuerySnapshot } from "firebase/firestore";
 
 import AddItems from "../components/addItems";
 import PantryList from "../components/pantryList";
 
 // useState helper functions
 
-function getPantryList(docs: QuerySnapshot) {
-  const pantryList: any = [];
+function getPantryList(docs: QuerySnapshot): Item[] {
+  const pantryList: Item[] = [];
   docs.forEach((doc: QueryDocumentSnapshot) => {
     pantryList.push({
       name: doc.id,
-      ...doc.data()
+      quantity: doc.data().quantity
     })
   });
   return pantryList;
@@ -56,27 +56,27 @@ async function removeItemFunc(docSnap: DocumentSnapshot, docRef: DocumentReferen
 
 export default function Home() {
   
-  const [ pantry, setPantry ] = useState([]);
-  const [ open, setOpen ] = useState(true);
-  const [ itemName, setItemName ] = useState("");
+  const [ pantry, setPantry ]: [ Item[], Dispatch<SetStateAction<Item[]>> ] = useState<Item[]>([]);
+  const [ open, setOpen ]: [ boolean, Dispatch<SetStateAction<boolean>> ] = useState(true);
+  const [ itemName, setItemName ]: [ string, Dispatch<SetStateAction<string>> ] = useState("");
 
   // React
 
-  const updatePantry = async () => {
+  const updatePantry: () => void = async () => {
     const snapshot: Query = query(collection(firestore, "pantry"));
     const docs: QuerySnapshot = await getDocs(snapshot);
-    const pantryList: any = getPantryList(docs);
+    const pantryList: Item[] = getPantryList(docs);
     setPantry(pantryList);
   }
 
-  const addItem = async (itemName: string) => {
+  const addItem: (itemName: string) => Promise<void> = async (itemName: string) => {
     const docRef: DocumentReference = doc(collection(firestore, "pantry"), itemName);
     const docSnap: DocumentSnapshot = await getDoc(docRef);
     addItemFunc(docSnap, docRef);
     await updatePantry();
   };
 
-  const removeItem = async (itemName: string) => {
+  const removeItem: (itemName: string) => Promise<void> = async (itemName: string) => {
     const docRef: DocumentReference = doc(collection(firestore, "pantry"), itemName);
     const docSnap: DocumentSnapshot = await getDoc(docRef);
     removeItemFunc(docSnap, docRef);
@@ -93,7 +93,7 @@ export default function Home() {
     <Box width="100vw" height="100vh" className="flex" flexDirection="column" gap={2}>
 
       {/* "Add items" modal */}
-      <AddItems open={open} addItem={addItem} handleClose={handleClose} itemName={itemName} setItemName={setItemName} />
+      <AddItems open={open} itemName={itemName} setItemName={setItemName} addItem={addItem} handleClose={handleClose} />
 
       {/* Button to show "add items" modal */}
       <Button variant="contained" onClick={ () => handleOpen() }>Add New Item</Button>

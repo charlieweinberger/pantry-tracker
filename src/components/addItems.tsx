@@ -1,6 +1,15 @@
+import type { Dispatch, SetStateAction } from "react";
 import { Box, Stack, Typography, Modal, TextField, Button } from "@mui/material";
 
-export default function AddItems({ open, addItem, handleClose, itemName, setItemName }: any) {
+interface Props {
+  open: boolean;
+  itemName: string;
+  setItemName: Dispatch<SetStateAction<string>>;
+  addItem: (parameterName: string) => Promise<void>;
+  handleClose: () => void;
+}
+
+export default function AddItems({ open, itemName, setItemName, addItem, handleClose }: Props): JSX.Element {
   return (
     <Modal
       open={open}
