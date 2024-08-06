@@ -2,8 +2,8 @@ import { Box, Stack, Typography, Button } from "@mui/material";
 
 interface Props {
   pantry: Item[];
-  addItem: (parameterName: string) => Promise<void>;
-  removeItem: (parameterName: string) => Promise<void>;
+  addItem: VoidFuncWithParameter;
+  removeItem: VoidFuncWithParameter;
 }
 
 export default function PantryList({ pantry, addItem, removeItem }: Props): JSX.Element {

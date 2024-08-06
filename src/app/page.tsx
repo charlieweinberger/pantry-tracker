@@ -19,7 +19,7 @@ function getPantryList(docs: QuerySnapshot): Item[] {
   docs.forEach((doc: QueryDocumentSnapshot) => {
     pantryList.push({
       name: doc.id,
-      quantity: doc.data().quantity
+      ...doc.data()
     })
   });
   return pantryList;
@@ -62,21 +62,21 @@ export default function Home() {
 
   // React
 
-  const updatePantry: () => void = async () => {
+  const updatePantry: VoidFunc = async () => {
     const snapshot: Query = query(collection(firestore, "pantry"));
     const docs: QuerySnapshot = await getDocs(snapshot);
     const pantryList: Item[] = getPantryList(docs);
     setPantry(pantryList);
   }
 
-  const addItem: (itemName: string) => Promise<void> = async (itemName: string) => {
+  const addItem: VoidFuncWithParameter = async (itemName: string) => {
     const docRef: DocumentReference = doc(collection(firestore, "pantry"), itemName);
     const docSnap: DocumentSnapshot = await getDoc(docRef);
     addItemFunc(docSnap, docRef);
     await updatePantry();
   };
 
-  const removeItem: (itemName: string) => Promise<void> = async (itemName: string) => {
+  const removeItem: VoidFuncWithParameter = async (itemName: string) => {
     const docRef: DocumentReference = doc(collection(firestore, "pantry"), itemName);
     const docSnap: DocumentSnapshot = await getDoc(docRef);
     removeItemFunc(docSnap, docRef);
@@ -84,8 +84,8 @@ export default function Home() {
   };
 
   useEffect(() => { updatePantry(); }, []);
-  const handleOpen: () => void = () => setOpen(true);
-  const handleClose: () => void = () => setOpen(false);
+  const handleOpen: VoidFunc = () => setOpen(true);
+  const handleClose: VoidFunc = () => setOpen(false);
 
   // JSX
 

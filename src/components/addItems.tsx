@@ -5,8 +5,8 @@ interface Props {
   open: boolean;
   itemName: string;
   setItemName: Dispatch<SetStateAction<string>>;
-  addItem: (parameterName: string) => Promise<void>;
-  handleClose: () => void;
+  addItem: VoidFuncWithParameter;
+  handleClose: VoidFunc;
 }
 
 export default function AddItems({ open, itemName, setItemName, addItem, handleClose }: Props): JSX.Element {
