@@ -3,7 +3,7 @@
 // Imports
 
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
-import { Box, Typography, Button } from "@mui/material"
+import { Box, Typography, Button } from "@mui/material";
 
 import { firestore } from "@/firebase";
 import { collection, query, doc, getDoc, setDoc, deleteDoc, getDocs } from "firebase/firestore";
